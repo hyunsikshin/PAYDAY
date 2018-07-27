@@ -1,40 +1,45 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled, { injectGlobal } from 'styled-components';
-import { HorizontalBar } from 'react-chartjs-2';
+import { Progress } from 'reactstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import CountUp from 'react-countup';
+import './App.css';
 
-injectGlobal`
-  body {
-    padding:0;
-    margin:0;
-  }
-`;
+const onComplete = () => {
+  console.log('Completed! 👏');
+};
 
-const Container = styled.div`
-  height: 100vh;
-  width: 100%;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const data = {};
+const onStart = () => {
+  console.log('Started! 💨');
+};
 
 class App extends Component {
+  state = {
+    salary: '',
+    payday: '',
+  };
+
   render() {
     return (
-      <Container>
-        <div>PAY DAY</div>
-        <HorizontalBar
-          data={data}
-          width={100}
-          height={10}
-          options={{
-            maintainAspectRatio: true,
-          }}
-        />
-      </Container>
+      <Fragment>
+        <div className="App">
+          <CountUp
+            className="account-balance"
+            start={0}
+            end={30000000}
+            duration={30000000}
+            useEasing={true}
+            useGrouping={true}
+            separator=","
+            decimals={3}
+            decimal=","
+            onComplete={onComplete}
+            onStart={onStart}
+          />
+        </div>
+
+        <Progress animated color="success" value="100" />
+      </Fragment>
     );
   }
 }
